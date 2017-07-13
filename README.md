@@ -1,3 +1,31 @@
+# Prerequisites
+
+First clone this repository
+
+    git clone https://github.com/tsaarni/docker-ejbca.git
+    cd docker-ejbca
+
+Then download all dependencies
+
+    wget http://downloads.sourceforge.net/project/ejbca/ejbca6/ejbca_6_3_1_1/ejbca_ce_6_3_1_1.zip
+    wget http://download.jboss.org/jbossas/7.1/jboss-as-7.1.1.Final/jboss-as-7.1.1.Final.tar.gz
+
+Next re-package EJBCA source release from .zip to .tar.gz (Docker does
+not support .zip)
+    
+    unzip -q ejbca_ce_6_3_1_1.zip
+    tar zcf ejbca_ce_6_3_1_1.tar.gz ejbca_ce_6_3_1_1
+    rm -rf ejbca_ce_6_3_1_1 ejbca_ce_6_3_1_1.zip
+
+Finally build the container image
+
+    docker build --tag ejbca .
+
+**Known problem**: Build fails randomly during `ant install`.
+Workaround: try build again.
+
+**Do not forget to change HOSTNAME** in Dockerfile:	WEB_HTTP_HOSTNAME=localhost
+
 # docker-ejbca
 
 This is the EJBCA container on CentOS 7.2 1511.
